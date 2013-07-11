@@ -31,7 +31,6 @@ when "redhat","centos","scientific","amazon","scientific","oracle"
                                     xorg-x11-fonts-misc
                                     xorg-x11-server-Xorg
                                     xorg-x11-xauth
-                                    xorg-x11-xfs
                                     xorg-x11-xinit
                                     xorg-x11-twm
                                     xterm
@@ -43,6 +42,7 @@ when "redhat","centos","scientific","amazon","scientific","oracle"
     else
       default['x11']['packages'] << %w{ 
         xorg-x11-fonts-truetype
+        xorg-x11-xfs
       }
     end
 else
