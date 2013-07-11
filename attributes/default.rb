@@ -19,7 +19,7 @@
 
 case node['platform']
 when "redhat","centos","scientific","amazon","scientific","oracle"
-    default['x11']['packages'] = %w{ 
+    default[:x11][:packages] = %w{ 
                                     bitmap-fonts
                                     desktop-backgrounds-basic
                                     xorg-x11-drivers
@@ -35,18 +35,22 @@ when "redhat","centos","scientific","amazon","scientific","oracle"
                                     xorg-x11-twm
                                     xterm
     }
-    if node[:platform_family] == 'redhat' and node[:platform_version].to_f >= 6.0
-      default['x11']['packages'] << %w{ 
-        http://rpmfind.net/linux/sourceforge/m/ms/mscorefonts2/rpms/msttcore-fonts-2.1-2.noarch.rpm
-      }
+    # TODO: What about newer versions of the other distro's ?
+    if node[:platform_family] == 'rhel' and node[:platform_version].to_f >= 6.0
+        #require 'awesome_print'
+        #ap node.default
+        #default[:x11][:packages] = default[:x11][:packages].concat( %w{ 
+        #   http://rpmfind.net/linux/sourceforge/m/ms/mscorefonts2/rpms/msttcore-fonts-2.1-2.noarch.rpm    
+        #} )
+        puts "You may install Microsoft's TrueType fonts with these instructions if necessary: http://corefonts.sourceforge.net"    
     else
-      default['x11']['packages'] << %w{ 
+      default[:x11][:packages] = default[:x11][:packages].concat( %w{ 
         xorg-x11-fonts-truetype
         xorg-x11-xfs
-      }
+      } )
     end
 else
-  default['x11']['packages'] = [
+  default[:x11][:packages] = [
     'xserver-xorg',
     'xterm'
   ]
