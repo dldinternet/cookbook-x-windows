@@ -19,24 +19,32 @@
 
 case node['platform']
 when "redhat","centos","scientific","amazon","scientific","oracle"
-  default['x11']['packages'] = %w{ 
-    bitmap-fonts
-    desktop-backgrounds-basic
-    xorg-x11-drivers
-    xorg-x11-fonts-100dpi
-    xorg-x11-fonts-75dpi
-    xorg-x11-fonts-ISO8859-1-100dpi
-    xorg-x11-fonts-ISO8859-1-75dpi
-    xorg-x11-fonts-Type1
-    xorg-x11-fonts-misc
-    xorg-x11-fonts-truetype
-    xorg-x11-server-Xorg
-    xorg-x11-xauth
-    xorg-x11-xfs
-    xorg-x11-xinit
-    xorg-x11-twm
-    xterm
-  }
+    default['x11']['packages'] = %w{ 
+                                    bitmap-fonts
+                                    desktop-backgrounds-basic
+                                    xorg-x11-drivers
+                                    xorg-x11-fonts-100dpi
+                                    xorg-x11-fonts-75dpi
+                                    xorg-x11-fonts-ISO8859-1-100dpi
+                                    xorg-x11-fonts-ISO8859-1-75dpi
+                                    xorg-x11-fonts-Type1
+                                    xorg-x11-fonts-misc
+                                    xorg-x11-server-Xorg
+                                    xorg-x11-xauth
+                                    xorg-x11-xfs
+                                    xorg-x11-xinit
+                                    xorg-x11-twm
+                                    xterm
+    }
+    if node[:platform_family] == 'redhat' and node[:platform_version].to_f >= 6.0
+      default['x11']['packages'] << %w{ 
+        http://rpmfind.net/linux/sourceforge/m/ms/mscorefonts2/rpms/msttcore-fonts-2.1-2.noarch.rpm
+      }
+    else
+      default['x11']['packages'] << %w{ 
+        xorg-x11-fonts-truetype
+      }
+    end
 else
   default['x11']['packages'] = [
     'xserver-xorg',
